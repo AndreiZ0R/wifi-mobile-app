@@ -1,0 +1,24 @@
+services:
+  # -------------------- Containers --------------------
+
+  wifi_db:
+    env_file:
+      - path: ./local.env
+        required: false
+    image: postgres:latest
+    container_name: wifi_db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: wifi_db
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+    volumes:
+      - wifi_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+# ---------- Volumes ----------
+volumes:
+  wifi_db:
+    driver: local
